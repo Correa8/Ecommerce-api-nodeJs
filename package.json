@@ -6,7 +6,12 @@
   "bin": "./bin/cli.js",
   "scripts": {
     "start": "node src/server",
-    "dev": "nodemon src/server"
+    "dev": "nodemon src/server",
+    "reset:migrate": "node ./src/tests/testMigrate.js",
+    "reset:test": "node ./src/tests/postTest.js",
+    "test": "jest --detectOpenHandles ",
+    "pretest": "npm run reset:migrate",
+    "posttest": "npm run reset:test"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +28,8 @@
     "sequelize": "6.32.1"
   },
   "devDependencies": {
-    "nodemon": "3.0.1"
+    "jest": "29.6.2",
+    "nodemon": "3.0.1",
+    "supertest": "6.3.3"
   }
 }
