@@ -14,8 +14,8 @@ let cartId;
 
 beforeAll(async () => {
   const user = {
-    email: "lui@gmail",
-    password: "lui1234567",
+    email: "luis@gmail",
+    password: "lui123",
   };
   const res = await request(app).post(`${URL_BASE_USERS}/login`).send(user);
 
@@ -31,7 +31,7 @@ beforeAll(async () => {
   product = await Product.create(productBody);
 });
 
-test("POST -> 'URL_BASE', return status code 201 and res.body.quantity === bodyCart.quantity", async () => {
+test("POST -> 'URL_BASE',  should return status code 201 and res.body.quantity === bodyCart.quantity", async () => {
   const bodyCart = {
     quantity: 1,
     productId: product.id,
@@ -47,7 +47,7 @@ test("POST -> 'URL_BASE', return status code 201 and res.body.quantity === bodyC
   expect(res.status).toBe(201);
   expect(res.body).toBeDefined();
   expect(res.body.quantity).toBe(bodyCart.quantity);
-  expect(res.body.id).toBe(userId);
+  expect(res.body.userId).toBe(userId);
 });
 
 test("GET -> 'URL_BASE', should return status code 200 and res.body.length === 1 ", async () => {
@@ -64,13 +64,13 @@ test("GET -> 'URL_BASE', should return status code 200 and res.body.length === 1
   expect(res.body[0].product.id).toBe(product.id);
 });
 
-test("PUT -> 'URL_BASE:id', should return status code 200 and res.body.quantity === bodyUpdate.quantity ", async () => {
+test("PUT -> 'URL_BASE/:id', should return status code 200 and res.body.quantity === bodyUpdate.quantity ", async () => {
   const bodyUpdate = {
     quantity: 2,
   };
   const res = await request(app)
     .put(`${URL_BASE}/${cartId}`)
-    .send(bodyCart)
+    .send(bodyUpdate)
     .set("Authorization", `Bearer ${TOKEN}`);
 
   expect(res.status).toBe(200);
@@ -83,6 +83,6 @@ test("DELETE -> 'URL_BASE/:id', should return status code 204", async () => {
     .delete(`${URL_BASE}/${cartId}`)
     .set("Authorization", `Bearer ${TOKEN}`);
 
-  expect(res.status).toBe(200);
+  expect(res.status).toBe(204);
   await product.destroy();
 });
