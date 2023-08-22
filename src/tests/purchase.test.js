@@ -38,6 +38,7 @@ beforeAll(async () => {
     quantity: 1,
     productId: product.id,
   };
+
   await request(app)
     .post("/api/v1/cart")
     .send(bodyCart)
