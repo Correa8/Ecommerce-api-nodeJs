@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../app");
 const Category = require("../models/Category");
-const ProductImg = require("../models/Productimg");
+const ProductImg = require("../models/ProductImg");
 require("../models");
 
 const URL_BASE = "/api/v1/products";
@@ -101,7 +101,6 @@ test("POST -> 'URL_BASE/:id/images', should return status code 200 and res.body.
     .send([image.id])
     .set("Authorization", `Bearer ${TOKEN}`);
 
-  console.log(res.body);
   expect(res.status).toBe(200);
   expect(res.body).toBeDefined();
   expect(res.body).toHaveLength(1);
@@ -115,5 +114,5 @@ test("DELET -> 'URL_BASE/:id', should resturn status code 204", async () => {
   expect(res.status).toBe(204);
 
   await category.destroy();
-  // await image.destroy();
+  await image.destroy();
 });
